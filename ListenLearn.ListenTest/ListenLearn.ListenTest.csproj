@@ -53,20 +53,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AnalyseTest.cs" />
+    <Compile Include="AnalyserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Listen\ListenLearn.Listen.csproj">
-      <Project>{8fa31431-4056-4fae-a96e-43c63630b1a7}</Project>
-      <Name>ListenLearn.Listen</Name>
-    </ProjectReference>
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Interfaces\" />
+    <ProjectReference Include="..\ListenLearn.Listen\ListenLearn.Listen.csproj">
+      <Project>{8f5fa15e-e562-4143-a282-612783949efe}</Project>
+      <Name>ListenLearn.Listen</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

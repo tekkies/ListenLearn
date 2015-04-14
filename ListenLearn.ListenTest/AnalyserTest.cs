@@ -4,12 +4,12 @@ using NUnit.Framework;
 namespace ListenLearnTest
 {
     [TestFixture]
-    public class AnalyseTest
+    public class AnalyserTest
     {
         [Test]
-        public void TestMethod1()
+        public void AnalyserTest_CreateAnalyser()
         {
-            new Analyse();
+            var anlyser = new AforgeAnalyser();
         }
     }
 }
