@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListenLearn.Listen", "Listen\ListenLearn.Listen.csproj", "{8FA31431-4056-4FAE-A96E-43C63630B1A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListenLearn.ListenLearnTest", "ListenLearnTest\ListenLearn.ListenLearnTest.csproj", "{5CE329E9-0827-4485-BB7D-F69D8C1B0977}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8FA31431-4056-4FAE-A96E-43C63630B1A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA31431-4056-4FAE-A96E-43C63630B1A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA31431-4056-4FAE-A96E-43C63630B1A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA31431-4056-4FAE-A96E-43C63630B1A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CE329E9-0827-4485-BB7D-F69D8C1B0977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CE329E9-0827-4485-BB7D-F69D8C1B0977}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CE329E9-0827-4485-BB7D-F69D8C1B0977}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CE329E9-0827-4485-BB7D-F69D8C1B0977}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
