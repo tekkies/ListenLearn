@@ -19,8 +19,9 @@ namespace ListenLearnTest
             var input = new double[512];
 
             RenderSin(input, 0.5, 0.5);
+            RenderSin(input, 1.5, 0.5);
             var output = analyser.Analyse(input);
-            Print(output);
+            Print(output, 100);
         }
 
         private void RenderSin(double[] input, double frequency, double amplitude)
@@ -31,11 +32,11 @@ namespace ListenLearnTest
             }
         }
 
-        private void Print(Complex[] output)
+        private void Print(Complex[] output, int rows)
         {
             double max = output.Select(item => Math.Abs(item.Re)).Concat(new double[] {0}).Max();
 
-            const int rows = 20;
+            
             for (int row = 0; row < rows; row++)
             {
                 StringBuilder rowText=new StringBuilder();
