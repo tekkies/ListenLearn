@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using AForge.Math;
 using ListenLearn.Listen.Core;
 using NUnit.Framework;
@@ -14,26 +16,41 @@ namespace ListenLearnTest
         public void AnalyserTest_CreateAnalyser()
         {
             var analyser = new AforgeFftAnalyser();
-            double[] sin = RenderSin(0.5, 0.5, 512);
-            var output = analyser.Analyse(sin);
+            var input = new double[512];
+
+            RenderSin(input, 0.5, 0.5);
+            var output = analyser.Analyse(input);
             Print(output);
         }
 
-        private double[] RenderSin(double frequency, double amplitude, int samples)
+        private void RenderSin(double[] input, double frequency, double amplitude)
         {
-            var output = new double[samples];
-            for (int i = 0; i < samples; i++)
+            for (int i = 0; i < input.Length; i++)
             {
-                output[i] = amplitude*Math.Sin(frequency*i);
+                input[i] += amplitude*Math.Sin(frequency*i);
             }
-            return output;
         }
 
         private void Print(Complex[] output)
         {
-            foreach (var item in output)
+            double max = output.Select(item => Math.Abs(item.Re)).Concat(new double[] {0}).Max();
+
+            const int rows = 20;
+            for (int row = 0; row < rows; row++)
             {
-                Console.WriteLine(Math.Abs(item.Re)); 
+                StringBuilder rowText=new StringBuilder();
+                foreach (var item in output)
+                {
+                    if (item.Re*(rows/max) >= (rows - row))
+                    {
+                        rowText.Append('*');
+                    }
+                    else
+                    {
+                        rowText.Append(' ');
+                    }
+                }
+                Console.WriteLine(row.ToString()+rowText);
             }
         }
     }
