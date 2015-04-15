@@ -4,7 +4,7 @@ using System.Text;
 using ListenLearn.Listen.Core;
 using NUnit.Framework;
 
-namespace ListenLearnTest
+namespace ListenLearn.ListenTest.Core
 {
     [TestFixture]
     public class AnalyserTest

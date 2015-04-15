@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListenLearn.Listen", "Liste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListenLearn.ListenTest", "ListenLearn.ListenTest\ListenLearn.ListenTest.csproj", "{5CE329E9-0827-4485-BB7D-F69D8C1B0977}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListenLearn.Learn", "ListenLearn.Learn\ListenLearn.Learn.csproj", "{600A8A03-C58B-4853-9C65-E5F6FE74A6DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListenLearn.LearnTest", "ListenLearn.LearnTest\ListenLearn.LearnTest.csproj", "{B581A6B7-1CDA-4723-A55B-52C636A4B76C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{5CE329E9-0827-4485-BB7D-F69D8C1B0977}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CE329E9-0827-4485-BB7D-F69D8C1B0977}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CE329E9-0827-4485-BB7D-F69D8C1B0977}.Release|Any CPU.Build.0 = Release|Any CPU
+		{600A8A03-C58B-4853-9C65-E5F6FE74A6DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{600A8A03-C58B-4853-9C65-E5F6FE74A6DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{600A8A03-C58B-4853-9C65-E5F6FE74A6DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{600A8A03-C58B-4853-9C65-E5F6FE74A6DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B581A6B7-1CDA-4723-A55B-52C636A4B76C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B581A6B7-1CDA-4723-A55B-52C636A4B76C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B581A6B7-1CDA-4723-A55B-52C636A4B76C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B581A6B7-1CDA-4723-A55B-52C636A4B76C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
