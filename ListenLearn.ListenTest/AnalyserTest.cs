@@ -9,8 +9,8 @@ namespace ListenLearnTest
     [TestFixture]
     public class AnalyserTest
     {
+        [TestCase(5.25, 5)]
         [TestCase(5, 5)]
-        [TestCase(10, 10)]
         [TestCase(10.25, 10)]
         public void AnalyserTest_AnalyseSin(double inputFrequency, int expectedPeak)
         {
