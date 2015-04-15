@@ -11,11 +11,21 @@ namespace ListenLearn.Listen.Core
 {
     public class AforgeFftAnalyser : Analyser
     {
-        public Complex[] Analyse(Double[] input)
+        public Double[] Analyse(Double[] input)
         {
             var complexArray = ToComplex(input);
             FourierTransform.FFT(complexArray, FourierTransform.Direction.Forward);
-            return complexArray;
+            return ExtractSpectrum(complexArray);
+        }
+
+        private double[] ExtractSpectrum(Complex[] input)
+        {
+            Double[] output = new double[input.Length/2];
+            for (int i = 0; i < input.Length/2; i++)
+            {
+                output[i] = input[i].Magnitude;
+            }
+            return output;
         }
 
         private Complex[] ToComplex(double[] input)

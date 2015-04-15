@@ -18,30 +18,33 @@ namespace ListenLearnTest
             var analyser = new AforgeFftAnalyser();
             var input = new double[256];
 
-            RenderSin(input, 0.5, 0.5);
-            RenderSin(input, 1.5, 0.5);
+            RenderSin(input, 0.5, 0.5, 0);
+            //RenderSin(input, 1.5, 1, 0);
+            //RenderSin(input, 12, 0.5);
             var output = analyser.Analyse(input);
-            Print(output, 100);
+            PrintChart(input, 40);
+            PrintChart(output, 40);
+            PrintArray(output);
         }
 
-        private void RenderSin(double[] input, double frequency, double amplitude)
+        private void RenderSin(double[] input, double frequency, double amplitude, double offset)
         {
             for (int i = 0; i < input.Length; i++)
             {
-                input[i] += amplitude*Math.Sin(frequency*i);
+                input[i] += amplitude*Math.Sin(frequency*i+offset);
             }
         }
 
-        private void Print(Complex[] output, int rows)
+        private void PrintChart(Double[] output, int rows)
         {
-            double max = output.Select(item => Math.Abs(item.Re)).Concat(new double[] {0}).Max();
-            
+            double max = output.Concat(new double[] {0}).Max();
+
             for (int row = 0; row < rows; row++)
             {
                 StringBuilder rowText=new StringBuilder();
                 foreach (var item in output)
                 {
-                    if (item.Re*(rows/max) >= (rows - row))
+                    if (item*(rows/max) >= (rows - row))
                     {
                         rowText.Append('*');
                     }
@@ -51,6 +54,14 @@ namespace ListenLearnTest
                     }
                 }
                 Console.WriteLine(row.ToString()+rowText);
+            }
+        }
+
+        private void PrintArray(Double[] output)
+        {
+            foreach (var item in output)
+            {
+                Console.WriteLine(item);                    
             }
         }
     }
