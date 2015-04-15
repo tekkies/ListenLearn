@@ -16,7 +16,7 @@ namespace ListenLearnTest
         public void AnalyserTest_CreateAnalyser()
         {
             var analyser = new AforgeFftAnalyser();
-            var input = new double[512];
+            var input = new double[256];
 
             RenderSin(input, 0.5, 0.5);
             RenderSin(input, 1.5, 0.5);
@@ -35,7 +35,6 @@ namespace ListenLearnTest
         private void Print(Complex[] output, int rows)
         {
             double max = output.Select(item => Math.Abs(item.Re)).Concat(new double[] {0}).Max();
-
             
             for (int row = 0; row < rows; row++)
             {
