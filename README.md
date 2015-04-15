@@ -33,3 +33,10 @@ Output spectrum
 	8     **                         
 	9   ******                       
 	 --------------------------------
+
+# Credits
+Standing on the shoulders of giants, including but not limited to:
+
+* [AForge](http://www.aforgenet.com/)
+* [Nunit](http://www.nunit.org/)
+* [Autofac](http://autofac.org/)
