@@ -12,7 +12,6 @@ namespace ListenLearn.LearnTest.Core
         [TestCase(0, 1, 1)]
         [TestCase(1, 0, 1)]
         [TestCase(1, 1, 0)]
-        [Ignore]
         public void LearnerTest_Xor(double a, double b, double expected)
         {
             Learner learner = new AforgeBackPropogation();
@@ -27,7 +26,7 @@ namespace ListenLearn.LearnTest.Core
             
             Random random = new Random();
             const double errorTarget = 0.01;
-            learner.Learn(o => samples[random.Next(0, samples.Length)], errorTarget);
+            Assert.IsTrue(learner.Learn(o => samples[random.Next(0, samples.Length)], errorTarget), "Learned the ropes");
 
             var input = new double[] {a, b};
             var output = learner.Compute(input)[0];
