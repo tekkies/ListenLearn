@@ -14,10 +14,11 @@ namespace ListenLearn.Learn.Core
                 2,
                 2,
                 1);
-                maxAttempts = 8;
-                epochSize = 4;
-                epochsPerSprint = 10;
-                maxEpochsPerAttempt = 2000;
+            momentum = 0;
+            maxAttempts = 8;
+            epochSize = 4;
+            epochsPerSprint = 10;
+            maxEpochsPerAttempt = 3000;
         }
     }
 }

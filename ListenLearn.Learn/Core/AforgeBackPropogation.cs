@@ -13,6 +13,7 @@ namespace ListenLearn.Learn.Core
         protected int epochsPerSprint;
         protected int maxEpochsPerAttempt;
         protected int totalEpochsThisAttempt;
+        protected double momentum;
 
         public bool Learn(Func<object, Sample> trainingExample, double targetError)
         {
@@ -31,6 +32,7 @@ namespace ListenLearn.Learn.Core
         {
             activationNetwork.Randomize();
             var teacher = new BackPropagationLearning(activationNetwork);
+            teacher.Momentum = momentum;
             totalEpochsThisAttempt = 0;
             while (totalEpochsThisAttempt < maxEpochsPerAttempt)
             {
