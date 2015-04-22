@@ -7,52 +7,52 @@ namespace ListenLearn.Learn.Core
 {
     public class AforgeBackPropogation : Learner
     {
-        private readonly ActivationNetwork activationNetwork;
-
-        public AforgeBackPropogation()
-        {
-            activationNetwork = new ActivationNetwork(
-                new SigmoidFunction(2),
-                2,
-                2,
-                1);
-        }
+        protected ActivationNetwork activationNetwork;
+        protected int maxAttempts;
+        protected int epochSize;
+        protected int epochsPerSprint;
+        protected int maxEpochsPerAttempt;
+        protected int totalEpochsThisAttempt;
 
         public bool Learn(Func<object, Sample> trainingExample, double targetError)
         {
-
-            const int maxAttempts = 8;
-            const int epochSize = 4;
-            const int epochsPerCourse=10;
-            const int maxEpochsPerCourse = 2000;
-
             for (int attemptIndex = 0; attemptIndex < maxAttempts; attemptIndex++)
             {
-
-                activationNetwork.Randomize();
-                var teacher = new BackPropagationLearning(activationNetwork);
-
-
-                int totalEpochsThisCourse = 0;
-                while (totalEpochsThisCourse < maxEpochsPerCourse)
+                if (TryLearning(trainingExample, targetError))
                 {
-                    double courseError = 0;
-                    for (int sampleIndex = 0; sampleIndex < (epochSize*epochsPerCourse); sampleIndex++)
-                    {
-                        var example = trainingExample.Invoke(null);
-                        courseError += teacher.Run(example.input, example.output);
-                    }
-                    totalEpochsThisCourse += epochsPerCourse;
-
-
-                    double epochError = courseError/epochsPerCourse;
-                    //System.Diagnostics.Debug.WriteLine(String.Format("Epoch {0} Error={1}", totalEpochsThisCourse, epochError));
-
-                    if (epochError < targetError)
-                        return true;
+                    System.Diagnostics.Debug.WriteLine(String.Format("Learned on attempt {0} after {1} epochs.", attemptIndex + 1, totalEpochsThisAttempt));
+                    return true;
                 }
             }
             return false;
+        }
+
+        private bool TryLearning(Func<object, Sample> trainingExample, double targetError)
+        {
+            activationNetwork.Randomize();
+            var teacher = new BackPropagationLearning(activationNetwork);
+            totalEpochsThisAttempt = 0;
+            while (totalEpochsThisAttempt < maxEpochsPerAttempt)
+            {
+                var sprintError = Sprint(trainingExample, epochsPerSprint, teacher, ref totalEpochsThisAttempt);
+                double epochError = sprintError/epochsPerSprint;
+                if (epochError < targetError)
+                    return true;
+            }
+            return false;
+        }
+
+        private double Sprint(Func<object, Sample> trainingExample, int epochsPerSprint, BackPropagationLearning teacher,
+            ref int totalEpochsThisSprint)
+        {
+            double sprintError = 0;
+            for (int sampleIndex = 0; sampleIndex < (epochSize*epochsPerSprint); sampleIndex++)
+            {
+                var example = trainingExample.Invoke(null);
+                sprintError += teacher.Run(example.input, example.output);
+            }
+            totalEpochsThisSprint += epochsPerSprint;
+            return sprintError;
         }
 
         public double[] Compute(double[] input)

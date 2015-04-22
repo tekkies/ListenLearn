@@ -14,7 +14,7 @@ namespace ListenLearn.LearnTest.Core
         [TestCase(1, 1, 0)]
         public void LearnerTest_Xor(double a, double b, double expected)
         {
-            Learner learner = new AforgeBackPropogation();
+            Learner learner = new AforgeBackPropogationXor();
 
             Sample[] samples =
             {
