@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Hello">Hello World, Click Me!</string>
-    <string name="ApplicationName">ListenLearn.Client.Android</string>
+  <string name="SampleA">A</string>
+  <string name="SampleB">B</string>
+  <string name="SampleC">C</string>
+  <string name="ApplicationName">ListenLearn.Client.Android</string>
 </resources>
