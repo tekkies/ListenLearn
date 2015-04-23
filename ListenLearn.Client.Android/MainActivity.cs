@@ -1,31 +1,44 @@
 ﻿using System;
 using Android.App;
-using Android.Content;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using Android.Media;
 using Android.OS;
+using Android.Widget;
+using Java.IO;
 
 namespace ListenLearn.Client.Android
 {
     [Activity(Label = "ListenLearn.Client.Android", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-        int count = 1;
+        private int count = 1;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-
-            // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+            var button = FindViewById<Button>(Resource.Id.MyButton);
+            button.Click += delegate
+            {
+                button.Text = string.Format("{0} clicks!", count++);
+                SaveAudioSample();
+            };
+        }
 
-            // Get our button from the layout resource,
-            // and attach an event to it
-            Button button = FindViewById<Button>(Resource.Id.MyButton);
+        private void SaveAudioSample()
+        {
+            var audioSampler = new AudioSampler();
+            audioSampler.Capture();
+            Save(audioSampler);
+        }
 
-            button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
+        private void Save(AudioSampler audioSampler)
+        {
+            var file = new File(GetExternalFilesDir(null), DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + "." + AudioSampler.SampleRateInHz + ".sample");
+            using (var outputStrem = new Java.IO.FileOutputStream(file))
+            {
+                outputStrem.Write(audioSampler.AudioBuffer, 0, audioSampler.BytesRead);
+            }
         }
     }
-}
 
+}
