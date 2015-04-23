@@ -1,0 +1,1 @@
+adb pull /sdcard/Android/data/uk.co.tekkies.ListenLearn.Client.Android/files
