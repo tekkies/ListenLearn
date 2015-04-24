@@ -13,7 +13,7 @@ namespace ListenLearn.Client.Android
 
         public void Capture()
         {
-            AllocateBuffer();
+            PrepareBuffer();
             using (var audioRecord = new AudioRecord(
                 AudioSource,
                 SampleRateInHz,
@@ -22,15 +22,27 @@ namespace ListenLearn.Client.Android
                 AudioBuffer.Length
                 ))
             {
-                audioRecord.StartRecording();
-                BytesRead = audioRecord.Read(AudioBuffer, 0, AudioBuffer.Length);
+                try
+                {
+                    audioRecord.StartRecording();
+                    BytesRead = audioRecord.Read(AudioBuffer, 0, AudioBuffer.Length);
+
+                }
+                finally
+                {
+                    audioRecord.Stop();
+                } 
             }
         }
 
-        private void AllocateBuffer()
+        private void PrepareBuffer()
         {
             var bufferSize = AudioRecord.GetMinBufferSize(SampleRateInHz, ChannelConfig, AudioFormat);
             AudioBuffer = new byte[bufferSize];
+            for (int i = 0; i < AudioBuffer.Length; i++)
+            {
+                AudioBuffer[i] = 0;
+            }
         }
     }
 }
