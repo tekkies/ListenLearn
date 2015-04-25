@@ -5,20 +5,20 @@ using AForge.Neuro.Learning;
 
 namespace ListenLearn.Learn.Core
 {
-    public class AforgeBackPropogationLaundry : AforgeBackPropogation
+    public class AforgeBackPropogationXor : AforgeBackPropogation
     {
-        public AforgeBackPropogationLaundry(int l0, int l1, int l2)
+        public AforgeBackPropogationXor()
         {
             activationNetwork = new ActivationNetwork(
                 new SigmoidFunction(2),
-                l0,
-                l1,
-                l2);
+                2,
+                2,
+                1);
             momentum = 0;
             maxAttempts = 8;
-            epochSize = 20;
+            epochSize = 4;
             epochsPerSprint = 10;
-            maxEpochsPerAttempt = 10000;
+            maxEpochsPerAttempt = 3000;
         }
     }
 }

@@ -15,12 +15,19 @@ namespace ListenLearnTest.Core
             {
                 transform[i] = Math.Log10(data[i]);
             }
-            PrintChart(transform, rows);
+            PrintChartWithAutoscale(transform, rows);
         }
 
-        public static void PrintChart(Double[] data, int rows)
+        public static void PrintChartWithAutoscale(Double[] data, int rows)
         {
-            var max = data.Concat(new double[] { 0 }).Max();
+            PrintChart(data, rows, 0);
+        }
+        public static void PrintChart(Double[] data, int rows, double max)
+        {
+            if (Math.Abs(max) < 0.001)
+            {
+                max = data.Concat(new double[] { 0 }).Max();    
+            }
             for (var row = 0; row < rows; row++)
             {
                 PrintChartRow(data, rows, max, row);

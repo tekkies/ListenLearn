@@ -21,8 +21,8 @@ namespace ListenLearn.ListenTest.Core
 
             MixSinWave(waveform, frequency, 0.5, 0);
             var spectrum = analyser.Analyse(waveform);
-            ChartPrinter.PrintChart(waveform, 10);
-            ChartPrinter.PrintChart(waveform, 10);
+            ChartPrinter.PrintChartWithAutoscale(waveform, 10);
+            ChartPrinter.PrintChartWithAutoscale(waveform, 10);
             PrintArray(spectrum);
             Assert.AreEqual(expectedPeak, AnalyseUtils.GetPeakElement(spectrum));
         }
@@ -41,7 +41,7 @@ namespace ListenLearn.ListenTest.Core
 
             var spectrum = analyser.Analyse(pcmParser.data);
 
-            ChartPrinter.PrintChart(spectrum, 20);
+            ChartPrinter.PrintChartWithAutoscale(spectrum, 20);
             var peakElement = AnalyseUtils.GetPeakElement(spectrum);
             int peakFrequency = analyser.GetFrequency(peakElement, 44100, samples);
             AssertBetween(expectedLower, expectedUpper, peakFrequency);
