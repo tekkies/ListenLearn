@@ -57,20 +57,26 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Core\AudioSampleLoaderTest.cs" />
+    <Compile Include="Core\PcmParserTest.cs" />
     <Compile Include="Core\AnalyserTest.cs" />
     <Compile Include="Core\ChartPrinter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\Piano\2015-04-24--07-32-07-740.A.44100.sample">
+    <None Include="Resources\Piano\C4.44100.sample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\Piano\2015-04-24--07-32-21-962.B.44100.sample">
+    <None Include="Resources\Piano\C5.44100.sample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\Piano\2015-04-24--07-32-24-651.C.44100.sample">
+    <None Include="Resources\Piano\C6.44100.sample">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Piano\D4.44100.sample">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Piano\E4.44100.sample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

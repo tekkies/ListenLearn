@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using ListenLearn.Listen.Core;
@@ -23,22 +24,39 @@ namespace ListenLearn.ListenTest.Core
             ChartPrinter.PrintChart(input, 10);
             ChartPrinter.PrintChart(input, 10);
             PrintArray(output);
-            Assert.AreEqual(expectedPeak, GetPeakElement(output));
+            Assert.AreEqual(expectedPeak, AnalyseUtils.GetPeakElement(output));
         }
 
-        private int GetPeakElement(double[] output)
+        [TestCase(@"Resources\Piano\C4.44100.sample", 1024, 243, 263)]
+        [TestCase(@"Resources\Piano\D4.44100.sample", 1024, 274, 294)]
+        [TestCase(@"Resources\Piano\E4.44100.sample", 1024, 308, 328)]
+        [TestCase(@"Resources\Piano\E4.44100.sample", 512, 298, 338)]
+        public void AudioSampleLoaderTest_FindPeakFrequency(string file, int samples, int expectedLower, int expectedUpper)
         {
-            int peakElement = -1;
-            double peakValue = 0;
-            for (int element = 0; element < output.Length; element++)
+            var fullPath = Path.Combine(TestContext.CurrentContext.WorkDirectory, file);
+            var pcmParser = new PcmParser();
+            byte[] bytes = File.ReadAllBytes(fullPath);
+            pcmParser.Parse(bytes, samples);
+
+            var analyser = new AforgeFftAnalyser();
+            var output = analyser.Analyse(pcmParser.data);
+            ChartPrinter.PrintChart(output, 20);
+            //PrintArray(output);
+            var peakElement = AnalyseUtils.GetPeakElement(output);
+            int peakFrequency = analyser.GetFrequency(peakElement, 44100, samples);
+            AssertBetween(expectedLower, expectedUpper, peakFrequency);
+        }
+
+        private void AssertBetween(int lower, int upper, int value)
+        {
+            if (value < lower)
             {
-                if (output[element] > peakValue)
-                {
-                    peakElement = element;
-                    peakValue = output[element];
-                }
+                Assert.AreEqual(lower, value);
             }
-            return peakElement;
+            else if (value > upper)
+            {
+                Assert.AreEqual(upper, value);
+            }
         }
 
         private void RenderSin(double[] input, double frequency, double amplitude, double offset)

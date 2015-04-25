@@ -31,5 +31,10 @@ namespace ListenLearn.Listen.Core
             }
             return complex;
         }
+
+        public int GetFrequency(int element, int sampleRate, int sampleSize)
+        {
+            return (element*sampleRate)/(sampleSize*2);
+        }
     }
 }

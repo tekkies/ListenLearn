@@ -25,8 +25,32 @@ namespace ListenLearnTest.Core
             {
                 PrintChartRow(data, rows, max, row);
             }
-            Console.Write(' ');
-            Console.WriteLine(new String('-', data.Length));
+            PrintHorizontalAxis(data.Length);
+        }
+
+        private static void PrintHorizontalAxis(int length)
+        {
+            StringBuilder axis = new StringBuilder("u  ");
+            for (int i = 0; i < length; i++)
+            {
+                axis.Append(i%10);
+            }
+            Console.WriteLine(axis);
+
+            axis = new StringBuilder("t  ");
+            for (int i = 0; i < length; i++)
+            {
+                axis.Append((i / 10)%10);
+            }
+            Console.WriteLine(axis);
+
+            axis = new StringBuilder("h  ");
+            for (int i = 0; i < length; i++)
+            {
+                axis.Append((i / 100) % 10);
+            }
+            Console.WriteLine(axis);
+
         }
 
         private static void PrintChartRow(double[] data, int rows, double max, int row)

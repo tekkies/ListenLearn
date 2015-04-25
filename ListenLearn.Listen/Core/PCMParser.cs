@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ListenLearn.Listen.Core
 {
-    public class PCMParser
+    public class PcmParser
     {
         public double[] data;
         public void Parse(byte[] bytes, int sampleCount)
