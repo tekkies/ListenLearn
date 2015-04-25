@@ -27,21 +27,21 @@ namespace ListenLearn.ListenTest.Core
             Assert.AreEqual(expectedPeak, AnalyseUtils.GetPeakElement(output));
         }
 
-        [TestCase(@"Resources\Piano\C4.44100.sample", 1024, 243, 263)]
-        [TestCase(@"Resources\Piano\D4.44100.sample", 1024, 274, 294)]
-        [TestCase(@"Resources\Piano\E4.44100.sample", 1024, 308, 328)]
-        [TestCase(@"Resources\Piano\E4.44100.sample", 512, 298, 338)]
+        [TestCase(@"C4.44100.sample", 2048, 243, 263)]
+        [TestCase(@"D4.44100.sample", 1024, 274, 294)]
+        [TestCase(@"E4.44100.sample", 1024, 308, 328)]
+        [TestCase(@"E4.44100.sample", 512, 298, 338)]
         public void AudioSampleLoaderTest_FindPeakFrequency(string file, int samples, int expectedLower, int expectedUpper)
         {
-            var fullPath = Path.Combine(TestContext.CurrentContext.WorkDirectory, file);
+            var fullPath = Path.Combine(TestContext.CurrentContext.WorkDirectory, @"Resources\Piano", file);
             var pcmParser = new PcmParser();
             byte[] bytes = File.ReadAllBytes(fullPath);
             pcmParser.Parse(bytes, samples);
-
             var analyser = new AforgeFftAnalyser();
+
             var output = analyser.Analyse(pcmParser.data);
+
             ChartPrinter.PrintChart(output, 20);
-            //PrintArray(output);
             var peakElement = AnalyseUtils.GetPeakElement(output);
             int peakFrequency = analyser.GetFrequency(peakElement, 44100, samples);
             AssertBetween(expectedLower, expectedUpper, peakFrequency);
