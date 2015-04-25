@@ -22,16 +22,7 @@ namespace ListenLearn.Client.Android
                 AudioBuffer.Length
                 ))
             {
-                try
-                {
-                    audioRecord.StartRecording();
-                    BytesRead = audioRecord.Read(AudioBuffer, 0, AudioBuffer.Length);
-
-                }
-                finally
-                {
-                    audioRecord.Stop();
-                } 
+                Record(audioRecord);
             }
         }
 
@@ -39,9 +30,30 @@ namespace ListenLearn.Client.Android
         {
             var bufferSize = AudioRecord.GetMinBufferSize(SampleRateInHz, ChannelConfig, AudioFormat);
             AudioBuffer = new byte[bufferSize];
-            for (int i = 0; i < AudioBuffer.Length; i++)
+            for (var i = 0; i < AudioBuffer.Length; i++)
             {
                 AudioBuffer[i] = 0;
+            }
+        }
+
+        private void Record(AudioRecord audioRecord)
+        {
+            try
+            {
+                audioRecord.StartRecording();
+                BytesRead = audioRecord.Read(AudioBuffer, 0, AudioBuffer.Length);
+            }
+            finally
+            {
+                audioRecord.Stop();
+            }
+        }
+
+        public void Save(string filePath)
+        {
+            using (var outputStrem = new Java.IO.FileOutputStream(filePath))
+            {
+                outputStrem.Write(AudioBuffer, 0, BytesRead);
             }
         }
     }

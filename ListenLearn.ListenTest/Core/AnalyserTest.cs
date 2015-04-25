@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using ListenLearn.Listen.Core;
+using ListenLearnTest.Core;
 using NUnit.Framework;
 
 namespace ListenLearn.ListenTest.Core
@@ -19,8 +20,8 @@ namespace ListenLearn.ListenTest.Core
 
             RenderSin(input, inputFrequency, 0.5, 0);
             var output = analyser.Analyse(input);
-            PrintChart(input, 10);
-            PrintChart(output, 10);
+            ChartPrinter.PrintChart(input, 10);
+            ChartPrinter.PrintChart(input, 10);
             PrintArray(output);
             Assert.AreEqual(expectedPeak, GetPeakElement(output));
         }
@@ -48,27 +49,6 @@ namespace ListenLearn.ListenTest.Core
             }
         }
 
-        private void PrintChart(Double[] output, int rows)
-        {
-            var max = output.Concat(new double[] {0}).Max();
-            for (var row = 0; row < rows; row++)
-            {
-                PrintChartRow(output, rows, max, row);
-            }
-            Console.Write(' ');
-            Console.WriteLine(new String('-', output.Length));
-        }
-
-        private static void PrintChartRow(double[] output, int rows, double max, int row)
-        {
-            var rowText = new StringBuilder();
-            foreach (var item in output)
-            {
-                var appearsOnRow = item*(rows/max) >= (rows - row);
-                rowText.Append(appearsOnRow ? '*' : ' ');
-            }
-            Console.WriteLine(row.ToString() + rowText);
-        }
 
         private void PrintArray(double[] output)
         {

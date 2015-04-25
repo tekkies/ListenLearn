@@ -57,11 +57,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Core\AudioSampleLoaderTest.cs" />
     <Compile Include="Core\AnalyserTest.cs" />
+    <Compile Include="Core\ChartPrinter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\2015-04-24--07-32-07-740.A.44100.sample">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />

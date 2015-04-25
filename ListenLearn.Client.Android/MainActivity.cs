@@ -39,13 +39,8 @@ namespace ListenLearn.Client.Android
 
         private void Save(AudioSampler audioSampler, string id)
         {
-            var file = new File(GetExternalFilesDir(null), DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss-fff") + "." + id + "." + AudioSampler.SampleRateInHz + ".sample");
-            using (var outputStrem = new Java.IO.FileOutputStream(file))
-            {
-                outputStrem.Write(audioSampler.AudioBuffer, 0, audioSampler.BytesRead);
-            }
+            string filePath = new File(GetExternalFilesDir(null), DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss-fff") + "." + id + "." + AudioSampler.SampleRateInHz + ".sample").ToString();
+            audioSampler.Save(filePath);
         }
-
     }
-
 }
