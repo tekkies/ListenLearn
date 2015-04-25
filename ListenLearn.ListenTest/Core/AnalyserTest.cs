@@ -14,17 +14,17 @@ namespace ListenLearn.ListenTest.Core
         [TestCase(5.25, 5)]
         [TestCase(5, 5)]
         [TestCase(10.25, 10)]
-        public void AnalyserTest_AnalyseSin(double inputFrequency, int expectedPeak)
+        public void AnalyserTest_AnalyseSin(double frequency, int expectedPeak)
         {
             var analyser = new AforgeFftAnalyser();
-            var input = new double[64];
+            var waveform = new double[64];
 
-            RenderSin(input, inputFrequency, 0.5, 0);
-            var output = analyser.Analyse(input);
-            ChartPrinter.PrintChart(input, 10);
-            ChartPrinter.PrintChart(input, 10);
-            PrintArray(output);
-            Assert.AreEqual(expectedPeak, AnalyseUtils.GetPeakElement(output));
+            MixSinWave(waveform, frequency, 0.5, 0);
+            var spectrum = analyser.Analyse(waveform);
+            ChartPrinter.PrintChart(waveform, 10);
+            ChartPrinter.PrintChart(waveform, 10);
+            PrintArray(spectrum);
+            Assert.AreEqual(expectedPeak, AnalyseUtils.GetPeakElement(spectrum));
         }
 
         [TestCase(@"C4.44100.sample", 2048, 243, 263)]
@@ -39,10 +39,10 @@ namespace ListenLearn.ListenTest.Core
             pcmParser.Parse(bytes, samples);
             var analyser = new AforgeFftAnalyser();
 
-            var output = analyser.Analyse(pcmParser.data);
+            var spectrum = analyser.Analyse(pcmParser.data);
 
-            ChartPrinter.PrintChart(output, 20);
-            var peakElement = AnalyseUtils.GetPeakElement(output);
+            ChartPrinter.PrintChart(spectrum, 20);
+            var peakElement = AnalyseUtils.GetPeakElement(spectrum);
             int peakFrequency = analyser.GetFrequency(peakElement, 44100, samples);
             AssertBetween(expectedLower, expectedUpper, peakFrequency);
         }
@@ -59,11 +59,11 @@ namespace ListenLearn.ListenTest.Core
             }
         }
 
-        private void RenderSin(double[] input, double frequency, double amplitude, double offset)
+        private void MixSinWave(double[] waveform, double frequency, double amplitude, double offset)
         {
-            for (var i = 0; i < input.Length; i++)
+            for (var i = 0; i < waveform.Length; i++)
             {
-                input[i] += amplitude*Math.Sin((frequency*Math.PI*2*i)/input.Length + offset);
+                waveform[i] += amplitude*Math.Sin((frequency*Math.PI*2*i)/waveform.Length + offset);
             }
         }
 

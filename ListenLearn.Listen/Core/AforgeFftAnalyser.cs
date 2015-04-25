@@ -5,21 +5,21 @@ namespace ListenLearn.Listen.Core
 {
     public class AforgeFftAnalyser : Analyser
     {
-        public Double[] Analyse(Double[] input)
+        public Double[] Analyse(Double[] waveform)
         {
-            var complexArray = ToComplex(input);
+            var complexArray = ToComplex(waveform);
             FourierTransform.FFT(complexArray, FourierTransform.Direction.Forward);
             return ExtractRealSpectrum(complexArray);
         }
 
-        private double[] ExtractRealSpectrum(Complex[] input)
+        private double[] ExtractRealSpectrum(Complex[] spectrumIn)
         {
-            var output = new double[input.Length/2];
-            for (var i = 0; i < input.Length/2; i++)
+            var spectrumOut = new double[spectrumIn.Length/2];
+            for (var i = 0; i < spectrumIn.Length/2; i++)
             {
-                output[i] = input[i].Magnitude;
+                spectrumOut[i] = spectrumIn[i].Magnitude;
             }
-            return output;
+            return spectrumOut;
         }
 
         private Complex[] ToComplex(double[] input)
