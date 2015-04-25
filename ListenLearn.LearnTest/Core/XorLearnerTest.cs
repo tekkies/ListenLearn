@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace ListenLearn.LearnTest.Core
 {
     [TestFixture]
-    public class LearnerTest
+    public class XorLearnerTest
     {
         [TestCase(0, 0, 0)]
         [TestCase(0, 1, 1)]
