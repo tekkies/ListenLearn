@@ -64,7 +64,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\2015-04-24--07-32-07-740.A.44100.sample">
+    <None Include="Resources\Piano\2015-04-24--07-32-07-740.A.44100.sample">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Piano\2015-04-24--07-32-21-962.B.44100.sample">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Piano\2015-04-24--07-32-24-651.C.44100.sample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

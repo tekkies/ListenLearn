@@ -8,26 +8,36 @@ namespace ListenLearnTest.Core
 {
     public class ChartPrinter
     {
-        public static void PrintChart(Double[] output, int rows)
+        public static void PrintLogChart(Double[] data, int rows)
         {
-            var max = output.Concat(new double[] { 0 }).Max();
-            for (var row = 0; row < rows; row++)
+            double[] transform = new double[data.Length];
+            for (int i = 0; i < data.Length; i++)
             {
-                PrintChartRow(output, rows, max, row);
+                transform[i] = Math.Log10(data[i]);
             }
-            Console.Write(' ');
-            Console.WriteLine(new String('-', output.Length));
+            PrintChart(transform, rows);
         }
 
-        private static void PrintChartRow(double[] output, int rows, double max, int row)
+        public static void PrintChart(Double[] data, int rows)
+        {
+            var max = data.Concat(new double[] { 0 }).Max();
+            for (var row = 0; row < rows; row++)
+            {
+                PrintChartRow(data, rows, max, row);
+            }
+            Console.Write(' ');
+            Console.WriteLine(new String('-', data.Length));
+        }
+
+        private static void PrintChartRow(double[] data, int rows, double max, int row)
         {
             var rowText = new StringBuilder();
-            foreach (var item in output)
+            foreach (var item in data)
             {
                 var appearsOnRow = item * (rows / max) >= (rows - row);
                 rowText.Append(appearsOnRow ? '*' : ' ');
             }
-            Console.WriteLine(row.ToString() + rowText);
+            Console.WriteLine(row.ToString().PadRight(3) + rowText);
         }
     }
 }
