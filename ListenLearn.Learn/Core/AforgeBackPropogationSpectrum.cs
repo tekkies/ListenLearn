@@ -12,7 +12,6 @@ namespace ListenLearn.Learn.Core
             activationNetwork = new ActivationNetwork(
                 new SigmoidFunction(2),
                 inputCount,
-                3,
                 outputCount);
             momentum = 0;
             maxAttempts = 8;

@@ -15,7 +15,7 @@ namespace ListenLearn.LearnTest.Core
         {
             int sampleLength = 16;
             Sample[] samples = GenerateSamples(sampleLength);
-            Learner learner = new AforgeBackPropogationSpectrum(8, 2);
+            Learner learner = new AforgeBackPropogationSpectrum(sampleLength/2, 2);
             Random random = new Random();
             const double errorTarget = 0.01;
             Assert.IsTrue(learner.Learn(o => samples[random.Next(0, samples.Length)], errorTarget), "Learned the ropes");
