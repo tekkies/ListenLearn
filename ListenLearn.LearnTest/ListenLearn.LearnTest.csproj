@@ -52,6 +52,7 @@
     <Compile Include="..\ListenLearn.ListenTest\Core\ChartPrinter.cs">
       <Link>Core\ChartPrinter.cs</Link>
     </Compile>
+    <Compile Include="Core\SpectrumLearnerTest.cs" />
     <Compile Include="Core\LaundryLearnerTest.cs" />
     <Compile Include="Core\XorLearnerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

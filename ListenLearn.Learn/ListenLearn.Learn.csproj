@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Core\AforgeBackPropogationLaundry.cs" />
+    <Compile Include="Core\AforgeBackPropogationSpectrum.cs" />
     <Compile Include="Core\AforgeBackPropogationXor.cs" />
     <Compile Include="Core\AforgeBackPropogation.cs" />
     <Compile Include="Core\Sample.cs" />

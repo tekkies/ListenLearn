@@ -37,6 +37,7 @@
     <Compile Include="Core\AforgeFftAnalyser.cs" />
     <Compile Include="Core\AnalyseUtils.cs" />
     <Compile Include="Core\PcmParser.cs" />
+    <Compile Include="Core\WaveUtils.cs" />
     <Compile Include="Interfaces\Analyser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

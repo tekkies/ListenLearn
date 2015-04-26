@@ -19,7 +19,7 @@ namespace ListenLearn.ListenTest.Core
             var analyser = new AforgeFftAnalyser();
             var waveform = new double[64];
 
-            MixSinWave(waveform, frequency, 0.5, 0);
+            WaveUtils.MixSinWave(waveform, frequency, 0.5, 0);
             var spectrum = analyser.Analyse(waveform);
             ChartPrinter.PrintChartWithAutoscale(waveform, 10);
             ChartPrinter.PrintChartWithAutoscale(waveform, 10);
@@ -56,14 +56,6 @@ namespace ListenLearn.ListenTest.Core
             else if (value > upper)
             {
                 Assert.AreEqual(upper, value);
-            }
-        }
-
-        private void MixSinWave(double[] waveform, double frequency, double amplitude, double offset)
-        {
-            for (var i = 0; i < waveform.Length; i++)
-            {
-                waveform[i] += amplitude*Math.Sin((frequency*Math.PI*2*i)/waveform.Length + offset);
             }
         }
 
