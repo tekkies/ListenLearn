@@ -7,7 +7,7 @@ namespace ListenLearn.Learn.Core
 {
     public class AforgeBackPropogationSpectrum : AforgeBackPropogation
     {
-        public AforgeBackPropogationSpectrum(int inputCount, int outputCount)
+        public AforgeBackPropogationSpectrum(int inputCount, int outputCount, int epochSize)
         {
             activationNetwork = new ActivationNetwork(
                 new SigmoidFunction(2),
@@ -15,7 +15,7 @@ namespace ListenLearn.Learn.Core
                 outputCount);
             momentum = 0;
             maxAttempts = 8;
-            epochSize = 20;
+            this.epochSize = epochSize;
             epochsPerSprint = 10;
             maxEpochsPerAttempt = 10000;
         }
