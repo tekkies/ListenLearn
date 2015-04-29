@@ -17,15 +17,17 @@ namespace ListenLearn.Learn.Core
 
         public bool Learn(Func<object, Sample> trainingExample, double targetError)
         {
+            bool success = false;
             for (int attemptIndex = 0; attemptIndex < maxAttempts; attemptIndex++)
             {
                 if (TryLearning(trainingExample, targetError))
                 {
                     System.Diagnostics.Debug.WriteLine(String.Format("Learned on attempt {0} after {1} epochs.", attemptIndex + 1, totalEpochsThisAttempt));
-                    return true;
+                    success = true;
+                    break;
                 }
             }
-            return false;
+            return success;
         }
 
         private bool TryLearning(Func<object, Sample> trainingExample, double targetError)
