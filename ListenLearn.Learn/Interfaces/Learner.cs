@@ -6,5 +6,6 @@ namespace ListenLearn.Learn.Core
     {
         bool Learn(Func<object, Sample> trainingExample, double targetError);
         double[] Compute(double[] input);
+	    string ToCsv();
     }
 }

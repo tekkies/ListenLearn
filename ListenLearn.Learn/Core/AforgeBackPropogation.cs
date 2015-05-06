@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Dynamic;
+using System.IO;
+using System.Text;
 using AForge.Neuro;
 using AForge.Neuro.Learning;
 
@@ -14,11 +16,12 @@ namespace ListenLearn.Learn.Core
         protected int maxEpochsPerAttempt;
         protected int totalEpochsThisAttempt;
         protected double momentum;
+	    protected int attemptIndex;
 
         public bool Learn(Func<object, Sample> trainingExample, double targetError)
         {
             bool success = false;
-            for (int attemptIndex = 0; attemptIndex < maxAttempts; attemptIndex++)
+            for (attemptIndex = 0; attemptIndex < maxAttempts; attemptIndex++)
             {
                 if (TryLearning(trainingExample, targetError))
                 {
@@ -63,5 +66,30 @@ namespace ListenLearn.Learn.Core
         {
             return activationNetwork.Compute(input);
         }
+
+	    public virtual string ToCsv()
+	    {
+			
+		    return string.Format("{0}, {1}, {2}, {3}, {4}, {5}, \"{6}\"",
+			    attemptIndex,
+			    totalEpochsThisAttempt,
+			    momentum,
+			    maxAttempts,
+			    maxEpochsPerAttempt,
+			    epochSize,
+				GetNetworkConfiguration());
+	    }
+
+	    private String GetNetworkConfiguration()
+	    {
+			StringBuilder configuration=new StringBuilder();
+		    configuration.Append(activationNetwork.InputsCount);
+		    foreach (var layer in activationNetwork.Layers)
+		    {
+				configuration.Append("-");
+			    configuration.Append(layer.Neurons.Length);
+		    }
+		    return configuration.ToString();
+	    }
     }
 }

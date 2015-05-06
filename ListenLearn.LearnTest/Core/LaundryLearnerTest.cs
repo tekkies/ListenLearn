@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using ListenLearn.Learn.Core;
 using ListenLearn.Listen.Core;
 using ListenLearnTest.Core;
@@ -10,25 +12,51 @@ namespace ListenLearn.LearnTest.Core
     [TestFixture]
     public class LaundryLearnerTest
     {
-        [TestCase(2048,3,3)]
-        //[TestCase(2048, 5, 3)]
-        //[TestCase(2048, 7, 3)]
-        //[TestCase(2048, 10, 3)]
-        [Ignore("Next: Autoscale spectrum, do some tests on simpler spectrums")]
-        public void LaundryLearnerTest_Punt(int sampleWindowSize, int l1Nodes, int l2Nodes)
+        [TestCase(2048,10)]
+        [Ignore("Next: Try some networks")]
+        public void LaundryLearnerTest_Punt(int sampleWindowSize, int l1Nodes)
         {
             var path = Path.Combine(TestContext.CurrentContext.WorkDirectory, @"Resources\Laundry");
             var files = Directory.GetFiles(path, "*.sample");
             Sample[] samples = new Sample[files.Length];
             LoadSamples(sampleWindowSize, files, samples);
+	        NormalizeSamples(samples);
 
-            Learner learner = new AforgeBackPropogationLaundry(sampleWindowSize / 2, l1Nodes, l2Nodes);
+			Learner learner = new AforgeBackPropogationLaundry(sampleWindowSize / 2, l1Nodes, samples[0].output.Length, samples.Count());
             Random random = new Random();
-            const double errorTarget = 0.1;
-            Assert.IsTrue(learner.Learn(o => samples[random.Next(0, samples.Length)], errorTarget), "Learned the ropes");
+            const double errorTarget = 20;
+
+	        for (int i = 0; i < 10000; i++)
+	        {
+				var stopwatch = new Stopwatch();
+				stopwatch.Start();
+		        learner.Learn(o => samples[random.Next(0, samples.Length)], errorTarget);
+		        using (var writer = new StreamWriter(this.GetType().Name+".csv", true))
+		        {
+			        writer.WriteLine(string.Format("{0}, {1}, {2}", errorTarget, learner.ToCsv(), stopwatch.ElapsedMilliseconds));
+		        }
+	        }
+	        Assert.IsTrue(learner.Learn(o => samples[random.Next(0, samples.Length)], errorTarget), "Learned the ropes");
         }
 
-        private static void LoadSamples(int sampleWindowSize, string[] files, Sample[] samples)
+	    private void NormalizeSamples(Sample[] samples)
+	    {
+		    foreach (var sample in samples)
+		    {
+			    NormalizeSample(sample);
+		    }
+	    }
+
+	    private void NormalizeSample(Sample sample)
+	    {
+		    double max = sample.input.Concat(new double[] {0}).Max();
+		    for (int i = 0; i < sample.input.Count(); i++)
+		    {
+			    sample.input[i] = sample.input[i]/max;
+		    }
+	    }
+
+	    private static void LoadSamples(int sampleWindowSize, string[] files, Sample[] samples)
         {
             for (int i = 0; i < files.Length; i++)
             {
@@ -39,7 +67,7 @@ namespace ListenLearn.LearnTest.Core
                 pcmParser.Parse(bytes, sampleWindowSize);
                 var analyser = new AforgeFftAnalyser();
                 var spectrum = analyser.Analyse(pcmParser.data);
-                ChartPrinter.PrintChart(spectrum, 20, 200);
+                //ChartPrinter.PrintChart(spectrum, 20, 200);
 
                 var output = GetOutputFromFileName(file);
                 samples[i] = new Sample(spectrum, output);
