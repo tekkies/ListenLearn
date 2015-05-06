@@ -11,7 +11,7 @@ namespace ListenLearn.LearnTest.Core
     [TestFixture]
     public class SpectrumLearnerTest
     {
-        const int sampleLength = 16;
+        const int sampleLength = 1024;
         Random random = new Random();
 
         [TestCase]
@@ -36,12 +36,13 @@ namespace ListenLearn.LearnTest.Core
         private List<Sample> GenerateSamples()
         {
             var samples = new List<Sample>();
+	        const double error = 0.9;
            
             for (int i = 0; i < 5; i++)
             {
                 AddSample(samples, 1, 0, 0, 0);
-                AddSample(samples, Random(1, 3), 0.5, 1, 0);
-                AddSample(samples, 5, 0.5, 0, 1);
+                AddSample(samples, Random(2-error, 2+error), 0.5, 1, 0);
+				AddSample(samples, Random(5-error, 5+error), 0.5, 0, 1);
             }
             return samples;
         }
@@ -60,8 +61,8 @@ namespace ListenLearn.LearnTest.Core
             WaveUtils.MixSinWave(waveform, frequency, amplitude, 0);
             analyser = new AforgeFftAnalyser();
             spectrum = analyser.Analyse(waveform);
-            ChartPrinter.PrintChartWithAutoscale(waveform, 10);
-            ChartPrinter.PrintChartWithAutoscale(spectrum, 10);
+            //ChartPrinter.PrintChartWithAutoscale(waveform, 10);
+            //ChartPrinter.PrintChartWithAutoscale(spectrum, 10);
             samples.Add(new Sample(spectrum, new double[] {a, b}));
         }
     }

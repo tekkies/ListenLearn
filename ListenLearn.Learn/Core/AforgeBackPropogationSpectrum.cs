@@ -12,12 +12,13 @@ namespace ListenLearn.Learn.Core
             activationNetwork = new ActivationNetwork(
                 new SigmoidFunction(2),
                 inputCount,
+				10,
                 outputCount);
             momentum = 0;
             maxAttempts = 8;
             this.epochSize = epochSize;
             epochsPerSprint = 10;
-            maxEpochsPerAttempt = 10000;
+            maxEpochsPerAttempt = 20000;
         }
     }
 }
