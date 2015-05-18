@@ -12,9 +12,9 @@ namespace ListenLearn.LearnTest.Core
     [TestFixture]
     public class LaundryLearnerTest
     {
-        [TestCase(2048,10)]
+        [TestCase(2048)]
         [Ignore("Next: Try some networks")]
-        public void LaundryLearnerTest_Punt(int sampleWindowSize, int l1Nodes)
+        public void LaundryLearnerTest_Experiment(int sampleWindowSize)
         {
             var path = Path.Combine(TestContext.CurrentContext.WorkDirectory, @"Resources\Laundry");
             var files = Directory.GetFiles(path, "*.sample");
@@ -22,12 +22,12 @@ namespace ListenLearn.LearnTest.Core
             LoadSamples(sampleWindowSize, files, samples);
 	        NormalizeSamples(samples);
 
-			Learner learner = new AforgeBackPropogationLaundry(sampleWindowSize / 2, l1Nodes, samples[0].output.Length, samples.Count());
             Random random = new Random();
-            const double errorTarget = 20;
 
 	        for (int i = 0; i < 10000; i++)
 	        {
+				Learner learner = new AforgeBackPropogationLaundry(sampleWindowSize / 2, samples[0].output.Length, samples.Count(), random.Next(8,100));
+				double errorTarget = random.Next(12, 18);
 				var stopwatch = new Stopwatch();
 				stopwatch.Start();
 		        learner.Learn(o => samples[random.Next(0, samples.Length)], errorTarget);
@@ -36,7 +36,7 @@ namespace ListenLearn.LearnTest.Core
 			        writer.WriteLine(string.Format("{0}, {1}, {2}", errorTarget, learner.ToCsv(), stopwatch.ElapsedMilliseconds));
 		        }
 	        }
-	        Assert.IsTrue(learner.Learn(o => samples[random.Next(0, samples.Length)], errorTarget), "Learned the ropes");
+	        //Assert.IsTrue(learner.Learn(o => samples[random.Next(0, samples.Length)], errorTarget), "Learned the ropes");
         }
 
 	    private void NormalizeSamples(Sample[] samples)

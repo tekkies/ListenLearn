@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
 using System.Text;
@@ -17,15 +18,17 @@ namespace ListenLearn.Learn.Core
         protected int totalEpochsThisAttempt;
         protected double momentum;
 	    protected int attemptIndex;
+	    protected double minEpochError;
 
         public bool Learn(Func<object, Sample> trainingExample, double targetError)
         {
             bool success = false;
-            for (attemptIndex = 0; attemptIndex < maxAttempts; attemptIndex++)
+			minEpochError = 1000000;
+			for (attemptIndex = 0; attemptIndex < maxAttempts; attemptIndex++)
             {
                 if (TryLearning(trainingExample, targetError))
                 {
-                    System.Diagnostics.Debug.WriteLine(String.Format("Learned on attempt {0} after {1} epochs.", attemptIndex + 1, totalEpochsThisAttempt));
+                    System.Diagnostics.Debug.WriteLine("Learned on attempt {0} after {1} epochs.", attemptIndex + 1, totalEpochsThisAttempt);
                     success = true;
                     break;
                 }
@@ -39,11 +42,22 @@ namespace ListenLearn.Learn.Core
             var teacher = new BackPropagationLearning(activationNetwork);
             teacher.Momentum = momentum;
             totalEpochsThisAttempt = 0;
+	        var stopWatch = new Stopwatch();
+			stopWatch.Start();
             while (totalEpochsThisAttempt < maxEpochsPerAttempt)
             {
                 var sprintError = Sprint(trainingExample, epochsPerSprint, teacher, ref totalEpochsThisAttempt);
                 double epochError = sprintError/epochsPerSprint;
-                if (epochError < targetError)
+	            if (epochError < minEpochError)
+	            {
+		            minEpochError = epochError;
+	            }
+	            if (stopWatch.ElapsedMilliseconds > 1000)
+	            {
+					stopWatch.Restart();
+		            Debug.WriteLine("Error:{0} {1}", epochError, ToCsv());
+	            }
+	            if (epochError < targetError)
                     return true;
             }
             return false;
@@ -69,10 +83,11 @@ namespace ListenLearn.Learn.Core
 
 	    public virtual string ToCsv()
 	    {
-			
-		    return string.Format("{0}, {1}, {2}, {3}, {4}, {5}, \"{6}\"",
+
+			return string.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}, \"{7}\"",
 			    attemptIndex,
 			    totalEpochsThisAttempt,
+				minEpochError,
 			    momentum,
 			    maxAttempts,
 			    maxEpochsPerAttempt,
